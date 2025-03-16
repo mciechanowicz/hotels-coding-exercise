@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 import { Hotel } from '../types/hotel';
 import { useRouter } from 'expo-router';
+import { Image } from 'expo-image';
+import StarRating from './StarRating';
 import { Colors } from '@/design/colors';
 import { PATHS } from '@/constants/paths';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Image } from 'expo-image';
 
 type Props = {
   hotel: Hotel;
@@ -41,6 +42,7 @@ const HotelCard = ({ hotel }: Props) => {
           {hotel.name}
         </Text>
         <View style={styles.ratingContainer}>
+          <StarRating rating={hotel.stars} size={14} />
           <View style={styles.userRating}>
             <Text style={styles.score}>{hotel.userRating}</Text>
           </View>
@@ -86,6 +88,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 8,
   },
   userRating: {
