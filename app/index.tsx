@@ -14,7 +14,8 @@ import { Colors } from '@/design/colors';
 
 export default function HotelListScreen() {
   const t = useTranslation();
-  const { hotels, isLoading, error } = useGetHotels();
+  const { hotels, isLoading, error, isRefreshing, refreshHotels } =
+    useGetHotels();
 
   if (isLoading) {
     return (
@@ -30,7 +31,7 @@ export default function HotelListScreen() {
       <View style={styles.centered}>
         <FontAwesome name="exclamation-circle" size={50} color={Colors.error} />
         <Text style={styles.errorText}>{error}</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.retryButton} onPress={refreshHotels}>
           <Text style={styles.retryButtonText}>
             {t('hotelList.retryButtonText')}
           </Text>
@@ -46,6 +47,8 @@ export default function HotelListScreen() {
         renderItem={({ item }) => <HotelCard hotel={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContent}
+        refreshing={isRefreshing}
+        onRefresh={refreshHotels}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <FontAwesome name="search" size={50} color={Colors.grey3} />

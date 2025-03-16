@@ -8,9 +8,11 @@ export const useGetHotels = () => {
   const [hotels, setHotels] = useState<Hotels>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     fetchHotels();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchHotels = async () => {
@@ -24,8 +26,14 @@ export const useGetHotels = () => {
       console.error('Error while fetching hotels:', err);
     } finally {
       setIsLoading(false);
+      setIsRefreshing(false);
     }
   };
 
-  return { hotels, isLoading, error };
+  const refreshHotels = () => {
+    setIsRefreshing(true);
+    fetchHotels();
+  };
+
+  return { hotels, isLoading, error, isRefreshing, refreshHotels };
 };
