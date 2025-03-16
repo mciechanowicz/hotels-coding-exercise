@@ -8,6 +8,7 @@
     "errorFetchingHotels": "Failed to download the list of hotels. Try again."
   },
   "hotelDetails": {
-    "title": "Hotel details"
+    "title": "Hotel details",
+    "pricePerNight": "/ night"
   }
 }
