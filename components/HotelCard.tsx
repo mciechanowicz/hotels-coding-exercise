@@ -1,16 +1,16 @@
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Hotel } from '../types/hotel';
+import { useRouter } from 'expo-router';
 import { Colors } from '@/design/colors';
 import { PATHS } from '@/constants/paths';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Image } from 'expo-image';
 
 type Props = {
   hotel: Hotel;
@@ -32,7 +32,9 @@ const HotelCard = ({ hotel }: Props) => {
       <Image
         source={{ uri: hotel.gallery[0] }}
         style={styles.image}
-        resizeMode="cover"
+        contentFit="cover"
+        placeholderContentFit="cover"
+        placeholder={require('../assets/images/hotel-placeholder.png')}
       />
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
@@ -50,9 +52,7 @@ const HotelCard = ({ hotel }: Props) => {
           <Text style={styles.price}>
             {hotel.price} {hotel.currency}
           </Text>
-          <Text style={styles.perNightText}>
-            {t('hotelDetails.pricePerNight')}
-          </Text>
+          <Text style={styles.perNightText}>{t('hotelDetails.perNight')}</Text>
         </View>
       </View>
     </TouchableOpacity>
