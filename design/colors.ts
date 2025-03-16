@@ -11,5 +11,6 @@ export enum Colors {
   grey2 = '#8c8b8b',
   grey3 = '#ccc',
   grey4 = '#333333',
+  transparentGrey = 'rgba(255, 255, 255, 0.5)',
   yellow = '#FFD700',
 }
