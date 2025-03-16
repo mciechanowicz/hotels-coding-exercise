@@ -1,6 +1,6 @@
 import { api } from '@/lib/api';
 import { Hotels } from '../types/hotel';
-import { API_ENDPOINTS } from '@/constants';
+import { API_ENDPOINTS } from '@/constants/apiEndpoints';
 
 export const getHotels = async (): Promise<Hotels> => {
   try {
