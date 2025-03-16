@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   listContent: {
+    gap: 16,
     paddingVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
