@@ -40,9 +40,28 @@ export default function HotelDetailScreen() {
       });
 
       if (url) {
-        Linking.openURL(url);
+        Linking.openURL(url).catch((err) =>
+          console.error('Error when opening map:', err),
+        );
       }
     }
+  };
+
+  const handleCall = () => {
+    if (!hotel) return;
+    const phoneNumber = `tel:${hotel.contact.phoneNumber}`;
+
+    Linking.openURL(phoneNumber).catch((err) =>
+      console.error('Error when opening phone app:', err),
+    );
+  };
+
+  const handleEmail = () => {
+    if (!hotel) return;
+
+    Linking.openURL(`mailto:${hotel.contact.email}`).catch((err) =>
+      console.error('Error when opening email app:', err),
+    );
   };
 
   return (
@@ -149,13 +168,15 @@ export default function HotelDetailScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}> {t('hotelDetails.contact')}</Text>
           <View style={styles.contactContainer}>
-            <TouchableOpacity style={styles.contactButton} onPress={() => {}}>
+            <TouchableOpacity style={styles.contactButton} onPress={handleCall}>
               <FontAwesome name="phone" size={16} color="white" />
               <Text style={styles.contactButtonText}>
                 {t('hotelDetails.phone')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contactButton} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.contactButton}
+              onPress={handleEmail}>
               <FontAwesome name="envelope" size={16} color="white" />
               <Text style={styles.contactButtonText}>
                 {t('hotelDetails.email')}
