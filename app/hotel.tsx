@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -23,6 +24,7 @@ export default function HotelDetailScreen() {
   const t = useTranslation();
   const router = useRouter();
   const { hotelData } = useLocalSearchParams<{ hotelData: string }>();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const hotel: Hotel = hotelData ? JSON.parse(hotelData) : null;
 
@@ -70,7 +72,14 @@ export default function HotelDetailScreen() {
         <TouchableOpacity onPress={handleGoBack} style={styles.backIcon}>
           <FontAwesome name="arrow-left" size={24} color={Colors.grey1} />
         </TouchableOpacity>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(e) => {
+            const newIndex = Math.round(e.nativeEvent.contentOffset.x / width);
+            setActiveImageIndex(newIndex);
+          }}>
           {hotel.gallery.map((image, index) => (
             <Image
               key={image + index}
@@ -80,6 +89,17 @@ export default function HotelDetailScreen() {
             />
           ))}
         </ScrollView>
+        <View style={styles.pagination}>
+          {hotel.gallery.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.paginationDot,
+                activeImageIndex === index && styles.paginationDotActive,
+              ]}
+            />
+          ))}
+        </View>
       </View>
 
       <View style={styles.infoContainer}>
@@ -373,5 +393,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 5,
+  },
+  pagination: {
+    flexDirection: 'row',
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 24,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.transparentGrey,
+    margin: 3,
+  },
+  paginationDotActive: {
+    backgroundColor: Colors.white,
   },
 });
