@@ -17,6 +17,7 @@
     "phone": "Phone",
     "email": "E-mail",
     "pricePerNight": "Price per night",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "openMap": "Click to open the map"
   }
 }

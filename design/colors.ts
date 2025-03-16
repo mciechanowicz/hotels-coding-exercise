@@ -1,6 +1,7 @@
 export enum Colors {
   white = '#fff',
   black = '#000',
+  transparentBlack = 'rgba(0, 0, 0, 0.5)',
   background = '#F5F5F5',
   blue = 'rgb(10, 132, 255)',
   green = '#4CAF50',

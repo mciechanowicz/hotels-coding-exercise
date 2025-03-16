@@ -6,9 +6,12 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
+import MapView, { Marker } from 'react-native-maps';
 import StarRating from '../components/StarRating';
 import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
@@ -25,6 +28,21 @@ export default function HotelDetailScreen() {
 
   const handleGoBack = () => {
     router.back();
+  };
+
+  const handleMapOpen = () => {
+    if (hotel && hotel.location) {
+      const { latitude, longitude } = hotel.location;
+      const label = hotel.name;
+      const url = Platform.select({
+        ios: `maps://0,0?q=${label}@${latitude},${longitude}`,
+        android: `geo:0,0?q=${latitude},${longitude}(${label})`,
+      });
+
+      if (url) {
+        Linking.openURL(url);
+      }
+    }
   };
 
   return (
@@ -65,6 +83,30 @@ export default function HotelDetailScreen() {
             {hotel.location.address}, {hotel.location.city}
           </Text>
         </View>
+
+        <TouchableOpacity style={styles.mapContainer} onPress={handleMapOpen}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: hotel.location.latitude,
+              longitude: hotel.location.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+            scrollEnabled={false}
+            zoomEnabled={false}
+            rotateEnabled={false}>
+            <Marker
+              coordinate={{
+                latitude: hotel.location.latitude,
+                longitude: hotel.location.longitude,
+              }}
+            />
+          </MapView>
+          <View style={styles.mapOverlay}>
+            <Text style={styles.mapText}>{t('hotelDetails.openMap')}</Text>
+          </View>
+        </TouchableOpacity>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('hotelDetails.hours')}</Text>
@@ -150,7 +192,7 @@ const styles = StyleSheet.create({
   backIcon: {
     position: 'absolute',
     left: 20,
-    top: 40,
+    top: 50,
     zIndex: 1,
     backgroundColor: Colors.background,
     borderRadius: '50%',
@@ -287,5 +329,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: Colors.white,
+  },
+  mapContainer: {
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 20,
+    overflow: 'hidden',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  mapOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapText: {
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: Colors.transparentBlack,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
   },
 });
