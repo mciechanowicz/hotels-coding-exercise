@@ -9,6 +9,14 @@
   },
   "hotelDetails": {
     "title": "Hotel details",
-    "pricePerNight": "/ night"
+    "perNight": "/ night",
+    "hours": "Hours",
+    "checkIn": "Check in",
+    "checkOut": "Check out",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "E-mail",
+    "pricePerNight": "Price per night",
+    "bookNow": "Book Now"
   }
 }

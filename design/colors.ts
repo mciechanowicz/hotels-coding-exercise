@@ -9,4 +9,6 @@ export enum Colors {
   grey1 = '#5a5a5a',
   grey2 = '#8c8b8b',
   grey3 = '#ccc',
+  grey4 = '#333333',
+  yellow = '#FFD700',
 }
