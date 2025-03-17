@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   TouchableOpacity,
   Dimensions,
   Platform,
@@ -17,6 +16,7 @@ import StarRating from '../components/StarRating';
 import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Image } from 'expo-image';
 
 const { width } = Dimensions.get('window');
 
@@ -85,7 +85,9 @@ export default function HotelDetailScreen() {
               key={image + index}
               source={{ uri: image }}
               style={styles.image}
-              resizeMode="cover"
+              contentFit="cover"
+              placeholderContentFit="contain"
+              placeholder={require('../assets/images/hotel-placeholder.png')}
             />
           ))}
         </ScrollView>
