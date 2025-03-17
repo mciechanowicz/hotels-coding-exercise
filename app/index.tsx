@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,12 +12,37 @@ import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Colors } from '@/design/colors';
+import FilterModal from '@/components/FilterModal';
+import { filterAndSortHotels } from '@/services/filterHotels';
 import HotelListHeader from '@/components/HotelListHeader';
+import { Hotels } from '@/types/hotel';
+import { HotelFilters } from '@/types/hotelFilters';
 
 export default function HotelListScreen() {
   const t = useTranslation();
+  const [filteredHotels, setFilteredHotels] = useState<Hotels>([]);
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [filters, setFilters] = useState<HotelFilters>({});
   const { hotels, isLoading, error, isRefreshing, refreshHotels } =
     useGetHotels();
+
+  useEffect(() => {
+    if (hotels.length > 0) {
+      setFilteredHotels(filterAndSortHotels(hotels, filters));
+    }
+  }, [hotels, filters]);
+
+  const handleApplyFilters = (newFilters: HotelFilters) => {
+    setFilters(newFilters);
+  };
+
+  const handleCloseFilterModal = () => {
+    setFilterModalVisible(false);
+  };
+
+  const handleOpenFilterModal = () => {
+    setFilterModalVisible(true);
+  };
 
   if (isLoading) {
     return (
@@ -45,7 +70,7 @@ export default function HotelListScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={hotels}
+        data={filteredHotels}
         renderItem={({ item }) => <HotelCard hotel={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContent}
@@ -61,8 +86,17 @@ export default function HotelListScreen() {
           </View>
         }
         ListHeaderComponent={
-          <HotelListHeader hotels={hotels} onOpen={() => {}} />
+          <HotelListHeader
+            hotels={filteredHotels}
+            onOpen={handleOpenFilterModal}
+          />
         }
+      />
+      <FilterModal
+        visible={filterModalVisible}
+        currentFilters={filters}
+        onClose={handleCloseFilterModal}
+        onApplyFilters={handleApplyFilters}
       />
     </View>
   );
