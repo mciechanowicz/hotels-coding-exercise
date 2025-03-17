@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Colors } from '@/design/colors';
+import HotelListHeader from '@/components/HotelListHeader';
 
 export default function HotelListScreen() {
   const t = useTranslation();
@@ -57,6 +59,9 @@ export default function HotelListScreen() {
               {t('hotelList.changeSearchFilters')}
             </Text>
           </View>
+        }
+        ListHeaderComponent={
+          <HotelListHeader hotels={hotels} onOpen={() => {}} />
         }
       />
     </View>
