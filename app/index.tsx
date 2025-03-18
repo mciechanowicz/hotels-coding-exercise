@@ -31,12 +31,8 @@ export default function HotelListScreen() {
     setFilters(newFilters);
   };
 
-  const handleCloseFilterModal = () => {
-    setFilterModalVisible(false);
-  };
-
-  const handleOpenFilterModal = () => {
-    setFilterModalVisible(true);
+  const handleToggleFilterModal = () => {
+    setFilterModalVisible(!filterModalVisible);
   };
 
   if (isLoading)
@@ -65,14 +61,14 @@ export default function HotelListScreen() {
         ListHeaderComponent={
           <HotelListHeader
             hotels={filteredHotels}
-            onOpen={handleOpenFilterModal}
+            onOpen={handleToggleFilterModal}
           />
         }
       />
       <FilterModal
         visible={filterModalVisible}
         currentFilters={filters}
-        onClose={handleCloseFilterModal}
+        onClose={handleToggleFilterModal}
         onApplyFilters={handleApplyFilters}
       />
     </View>
