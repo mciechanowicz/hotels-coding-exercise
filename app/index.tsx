@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
@@ -7,7 +7,6 @@ import { Colors } from '@/design/colors';
 import FilterModal from '@/components/FilterModal';
 import { filterAndSortHotels } from '@/services/filterHotels';
 import HotelListHeader from '@/components/HotelListHeader';
-import { Hotels } from '@/types/hotel';
 import { HotelFilters } from '@/types/hotelFilters';
 import ErrorView from '@/components/ErrorView';
 import LoadingIndicator from '@/components/LoadingIndicator';
@@ -15,17 +14,15 @@ import HotelEmptyList from '@/components/HotelEmptyList';
 
 export default function HotelListScreen() {
   const t = useTranslation();
-  const [filteredHotels, setFilteredHotels] = useState<Hotels>([]);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [filters, setFilters] = useState<HotelFilters>({});
   const { hotels, isLoading, error, isRefreshing, refreshHotels } =
     useGetHotels();
 
-  useEffect(() => {
-    if (hotels.length > 0) {
-      setFilteredHotels(filterAndSortHotels(hotels, filters));
-    }
-  }, [hotels, filters]);
+  const filteredHotels = useMemo(
+    () => (hotels.length > 0 ? filterAndSortHotels(hotels, filters) : []),
+    [hotels, filters],
+  );
 
   const handleApplyFilters = (newFilters: HotelFilters) => {
     setFilters(newFilters);
@@ -71,12 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
   listContent: {
     gap: 16,
