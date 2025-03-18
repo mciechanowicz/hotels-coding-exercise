@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { View, StyleSheet, FlatList } from 'react-native';
 import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -12,6 +11,7 @@ import { Hotels } from '@/types/hotel';
 import { HotelFilters } from '@/types/hotelFilters';
 import ErrorView from '@/components/ErrorView';
 import LoadingIndicator from '@/components/LoadingIndicator';
+import HotelEmptyList from '@/components/HotelEmptyList';
 
 export default function HotelListScreen() {
   const t = useTranslation();
@@ -49,15 +49,7 @@ export default function HotelListScreen() {
         contentContainerStyle={styles.listContent}
         refreshing={isRefreshing}
         onRefresh={refreshHotels}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <FontAwesome name="search" size={50} color={Colors.grey3} />
-            <Text style={styles.emptyText}>{t('hotelList.emptyListText')}</Text>
-            <Text style={styles.emptySubtext}>
-              {t('hotelList.changeSearchFilters')}
-            </Text>
-          </View>
-        }
+        ListEmptyComponent={<HotelEmptyList />}
         ListHeaderComponent={
           <HotelListHeader
             hotels={filteredHotels}
@@ -91,23 +83,5 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  emptyContainer: {
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 300,
-  },
-  emptyText: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.grey1,
-  },
-  emptySubtext: {
-    marginTop: 5,
-    fontSize: 14,
-    color: Colors.grey2,
-    textAlign: 'center',
   },
 });
