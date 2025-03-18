@@ -4,13 +4,11 @@ import { useGetHotels } from '@/hooks/useGetHotels';
 import { useTranslation } from '@/hooks/useTranslation';
 import { filterAndSortHotels } from '@/services/filterHotels';
 import { Colors } from '@/design/colors';
-import HotelListHeader from '@/components/HotelListHeader';
 import FilterModal from '@/components/FilterModal';
 import { HotelFilters } from '@/types/hotelFilters';
 import ErrorView from '@/components/ErrorView';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import HotelEmptyList from '@/components/HotelEmptyList';
-import HotelCard from '@/components/HotelCard';
+import { HotelCard, HotelEmptyList, HotelListHeader } from '@/components/Hotel';
 
 export default function HotelListScreen() {
   const t = useTranslation();

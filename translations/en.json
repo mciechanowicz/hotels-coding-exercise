@@ -16,7 +16,7 @@
       "one": "{{count}} hotel found",
       "other": "{{count}} hotels found"
     },
-    "filtersTiTle": "Filter Hotels",
+    "filtersTitle": "Filter Hotels",
     "filtersStarRating": "Star rating",
     "filtersSortBy": "Sort By",
     "filtersSortByPrice": "Price",

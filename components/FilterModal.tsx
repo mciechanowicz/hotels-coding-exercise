@@ -60,7 +60,7 @@ const FilterModal = ({
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.header}>
-            <Text style={styles.title}>{t('hotelList.filtersTiTle')}</Text>
+            <Text style={styles.title}>{t('hotelList.filtersTitle')}</Text>
             <TouchableOpacity onPress={onClose}>
               <FontAwesome name="times" size={24} color={Colors.grey4} />
             </TouchableOpacity>
