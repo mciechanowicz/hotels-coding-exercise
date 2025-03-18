@@ -48,7 +48,7 @@ const HotelCard = ({ hotel }: Props) => {
           </View>
         </View>
         <Text style={styles.location} numberOfLines={1}>
-          {hotel.location.city}, {hotel.location.address}
+          {`${hotel.location.city}, ${hotel.location.address}`}
         </Text>
         <View style={styles.footer}>
           <Text style={styles.price}>

@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Platform,
+  Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -17,6 +17,8 @@ import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Image } from 'expo-image';
+import { useOpenMap } from '@/hooks/useOpenMap';
+import ErrorView from '@/components/ErrorView';
 
 const { width } = Dimensions.get('window');
 
@@ -28,43 +30,42 @@ export default function HotelDetailScreen() {
 
   const hotel: Hotel = hotelData ? JSON.parse(hotelData) : null;
 
+  const openMap = useOpenMap({
+    latitude: hotel.location.latitude,
+    longitude: hotel.location.longitude,
+    label: hotel.name,
+  });
+
   const handleGoBack = () => {
     router.back();
-  };
-
-  const handleMapOpen = () => {
-    if (hotel && hotel.location) {
-      const { latitude, longitude } = hotel.location;
-      const label = hotel.name;
-      const url = Platform.select({
-        ios: `maps://0,0?q=${label}@${latitude},${longitude}`,
-        android: `geo:0,0?q=${latitude},${longitude}(${label})`,
-      });
-
-      if (url) {
-        Linking.openURL(url).catch((err) =>
-          console.error('Error when opening map:', err),
-        );
-      }
-    }
   };
 
   const handleCall = () => {
     if (!hotel) return;
     const phoneNumber = `tel:${hotel.contact.phoneNumber}`;
 
-    Linking.openURL(phoneNumber).catch((err) =>
-      console.error('Error when opening phone app:', err),
-    );
+    Linking.openURL(phoneNumber).catch((err) => {
+      Alert.alert(t('common.emailError'));
+      console.error('Error when opening phone app:', err);
+    });
   };
 
   const handleEmail = () => {
     if (!hotel) return;
 
-    Linking.openURL(`mailto:${hotel.contact.email}`).catch((err) =>
-      console.error('Error when opening email app:', err),
-    );
+    Linking.openURL(`mailto:${hotel.contact.email}`).catch((err) => {
+      Alert.alert(t('common.phoneError'));
+      console.error('Error when opening email app:', err);
+    });
   };
+
+  if (!hotel)
+    return (
+      <ErrorView
+        error={t('hotelDetails.goBackButton')}
+        onRetry={handleGoBack}
+      />
+    );
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -125,7 +126,7 @@ export default function HotelDetailScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.mapContainer} onPress={handleMapOpen}>
+        <TouchableOpacity style={styles.mapContainer} onPress={openMap}>
           <MapView
             style={styles.map}
             initialRegion={{

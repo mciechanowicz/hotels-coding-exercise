@@ -1,6 +1,9 @@
 {
   "common": {
-    "retryButtonText": "Try again"
+    "retryButtonText": "Try again",
+    "phoneError": "Unable to open phone app.",
+    "emailError": "Unable to open email app.",
+    "mapError": "Unable to open map."
   },
   "hotelList": {
     "title": "Hotels",
@@ -33,6 +36,7 @@
     "email": "E-mail",
     "pricePerNight": "Price per night",
     "bookNow": "Book Now",
-    "openMap": "Click to open the map"
+    "openMap": "Click to open the map",
+    "goBackButton": "Go back"
   }
 }
