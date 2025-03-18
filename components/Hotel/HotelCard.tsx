@@ -5,10 +5,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { Hotel } from '../types/hotel';
+import { Hotel } from '../../types/hotel';
 import { useRouter } from 'expo-router';
 import { Image } from 'expo-image';
-import StarRating from './StarRating';
+import StarRating from '../StarRating';
 import { Colors } from '@/design/colors';
 import { PATHS } from '@/constants/paths';
 import { useTranslation } from '@/hooks/useTranslation';
