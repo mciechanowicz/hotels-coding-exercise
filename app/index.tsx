@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
@@ -17,6 +11,7 @@ import HotelListHeader from '@/components/HotelListHeader';
 import { Hotels } from '@/types/hotel';
 import { HotelFilters } from '@/types/hotelFilters';
 import ErrorView from '@/components/ErrorView';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default function HotelListScreen() {
   const t = useTranslation();
@@ -44,14 +39,8 @@ export default function HotelListScreen() {
     setFilterModalVisible(true);
   };
 
-  if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color={Colors.blue} />
-        <Text style={styles.loadingText}>{t('hotelList.loadingHotels')}</Text>
-      </View>
-    );
-  }
+  if (isLoading)
+    return <LoadingIndicator message={t('hotelList.loadingHotels')} />;
 
   if (error) return <ErrorView error={error} />;
 
@@ -100,11 +89,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: Colors.grey1,
   },
   listContent: {
     gap: 16,
