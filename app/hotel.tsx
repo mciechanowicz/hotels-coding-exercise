@@ -8,7 +8,6 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
-import StarRating from '../components/StarRating';
 import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -16,8 +15,9 @@ import { useOpenMap } from '@/hooks/useOpenMap';
 import ErrorView from '@/components/ErrorView';
 import { useContact } from '@/hooks/useContact';
 import HorizontalGallery from '@/components/HorizontalGallery';
+import HotelDescriptionSection from '@/components/Hotel/HotelDescriptionSection';
 
-export default function HotelDetailScreen() {
+const HotelDetailScreen = () => {
   const t = useTranslation();
   const router = useRouter();
   const { openPhone, openEmail } = useContact();
@@ -51,25 +51,13 @@ export default function HotelDetailScreen() {
       <HorizontalGallery images={hotel.gallery} />
 
       <View style={styles.infoContainer}>
-        <Text style={styles.hotelName}>{hotel.name}</Text>
-        <View style={styles.ratingContainer}>
-          <StarRating rating={hotel.stars} size={20} />
-          <View style={styles.userRating}>
-            <Text style={styles.score}>{hotel.userRating}</Text>
-          </View>
-        </View>
-
-        <View style={styles.addressContainer}>
-          <FontAwesome
-            name="map-marker"
-            size={16}
-            color={Colors.grey1}
-            style={styles.icon}
-          />
-          <Text style={styles.addressText}>
-            {hotel.location.address}, {hotel.location.city}
-          </Text>
-        </View>
+        <HotelDescriptionSection
+          name={hotel.name}
+          stars={hotel.stars}
+          userRating={hotel.userRating}
+          address={hotel.location.address}
+          city={hotel.location.city}
+        />
 
         {hotel.location.latitude && hotel.location.longitude && (
           <TouchableOpacity style={styles.mapContainer} onPress={openMap}>
@@ -175,7 +163,7 @@ export default function HotelDetailScreen() {
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -201,39 +189,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     marginTop: -20,
   },
-  hotelName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: Colors.grey4,
-    marginBottom: 8,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  userRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 12,
-  },
-  score: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: Colors.blue,
-  },
-  addressContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   icon: {
     marginRight: 8,
-  },
-  addressText: {
-    fontSize: 14,
-    color: Colors.grey1,
-    flex: 1,
   },
   section: {
     marginBottom: 20,
@@ -339,3 +296,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
+export default HotelDetailScreen;
