@@ -36,6 +36,7 @@
     "email": "E-mail",
     "pricePerNight": "Price per night",
     "bookNow": "Book Now",
+    "booked": "Booked!",
     "openMap": "Click to open the map",
     "goBackButton": "Go back"
   }

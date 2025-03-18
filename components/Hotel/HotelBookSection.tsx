@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Colors } from '@/design/colors';
@@ -8,7 +9,13 @@ type Props = {
 };
 
 const HotelBookSection = ({ price, currency }: Props) => {
+  const [isBooked, setIsBooked] = useState(false);
   const t = useTranslation();
+
+  const handleBook = () => {
+    setIsBooked(true);
+  };
+
   return (
     <View style={styles.priceContainer}>
       <View>
@@ -17,8 +24,13 @@ const HotelBookSection = ({ price, currency }: Props) => {
           {price} {currency}
         </Text>
       </View>
-      <TouchableOpacity style={styles.bookButton}>
-        <Text style={styles.bookButtonText}>{t('hotelDetails.bookNow')}</Text>
+      <TouchableOpacity
+        style={[styles.bookButton, isBooked && styles.bookedButton]}
+        onPress={handleBook}
+        disabled={isBooked}>
+        <Text style={styles.bookButtonText}>
+          {isBooked ? t('hotelDetails.booked') : t('hotelDetails.bookNow')}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -53,6 +65,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: Colors.white,
+  },
+  bookedButton: {
+    backgroundColor: Colors.grey4,
   },
 });
 
