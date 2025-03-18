@@ -10,7 +10,7 @@ type Props = {
   label?: string;
 };
 
-const HotelMap = ({ latitude, longitude, label }: Props) => {
+const HotelMapSection = ({ latitude, longitude, label }: Props) => {
   const t = useTranslation();
   const openMap = useOpenMap({
     latitude,
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HotelMap;
+export default HotelMapSection;
