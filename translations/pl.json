@@ -1,5 +1,42 @@
 {
+  "common": {
+    "retryButtonText": "Spróbuj ponownie",
+    "phoneError": "Nie udało się otworzyć aplikacji telefonicznej.",
+    "emailError": "Nie udało się otworzyć aplikacji pocztowej.",
+    "mapError": "Nie udało się otworzyć mapy."
+  },
   "hotelList": {
-    "title": "Hotele"
+    "title": "Hotele",
+    "loadingHotels": "Ładowanie hoteli...",
+    "emptyListText": "Nie znaleziono hoteli",
+    "changeSearchFilters": "Spróbuj zmienić filtry wyszukiwania",
+    "errorFetchingHotels": "Nie udało się pobrać listy hoteli. Spróbuj ponownie.",
+    "filters": "Filtry",
+    "hotelsFound": {
+      "one": "Znaleziono {{count}} hotel",
+      "other": "Znaleziono {{count}} hoteli"
+    },
+    "filtersTiTle": "Filtruj hotele",
+    "filtersStarRating": "Ocena gwiazdkowa",
+    "filtersSortBy": "Sortuj według",
+    "filtersSortByPrice": "Cena",
+    "filtersSortByRating": "Ocena",
+    "filtersSortByStars": "Gwiazdi",
+    "filtersReset": "Resetuj",
+    "filtersApply": "Zastosuj"
+  },
+  "hotelDetails": {
+    "title": "Szczegóły hotelu",
+    "perNight": "/ noc",
+    "hours": "Godziny",
+    "checkIn": "Zameldowanie",
+    "checkOut": "Wymeldowanie",
+    "contact": "Kontakt",
+    "phone": "Telefon",
+    "email": "E-mail",
+    "pricePerNight": "Cena za noc",
+    "bookNow": "Zarezerwuj teraz",
+    "openMap": "Kliknij, aby otworzyć mapę",
+    "goBackButton": "Wróć"
   }
 }
