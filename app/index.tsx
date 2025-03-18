@@ -1,16 +1,16 @@
 import { useMemo, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import HotelCard from '../components/HotelCard';
 import { useGetHotels } from '@/hooks/useGetHotels';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Colors } from '@/design/colors';
-import FilterModal from '@/components/FilterModal';
 import { filterAndSortHotels } from '@/services/filterHotels';
+import { Colors } from '@/design/colors';
 import HotelListHeader from '@/components/HotelListHeader';
+import FilterModal from '@/components/FilterModal';
 import { HotelFilters } from '@/types/hotelFilters';
 import ErrorView from '@/components/ErrorView';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import HotelEmptyList from '@/components/HotelEmptyList';
+import HotelCard from '@/components/HotelCard';
 
 export default function HotelListScreen() {
   const t = useTranslation();
@@ -46,6 +46,7 @@ export default function HotelListScreen() {
         contentContainerStyle={styles.listContent}
         refreshing={isRefreshing}
         onRefresh={refreshHotels}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={<HotelEmptyList />}
         ListHeaderComponent={
           <HotelListHeader
