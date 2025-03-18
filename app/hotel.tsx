@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -14,19 +12,16 @@ import StarRating from '../components/StarRating';
 import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Image } from 'expo-image';
 import { useOpenMap } from '@/hooks/useOpenMap';
 import ErrorView from '@/components/ErrorView';
 import { useContact } from '@/hooks/useContact';
-
-const { width } = Dimensions.get('window');
+import HorizontalGallery from '@/components/HorizontalGallery';
 
 export default function HotelDetailScreen() {
   const t = useTranslation();
   const router = useRouter();
   const { openPhone, openEmail } = useContact();
   const { hotelData } = useLocalSearchParams<{ hotelData: string }>();
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const hotel: Hotel = hotelData ? JSON.parse(hotelData) : null;
 
@@ -50,41 +45,10 @@ export default function HotelDetailScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={handleGoBack} style={styles.backIcon}>
-          <FontAwesome name="arrow-left" size={24} color={Colors.grey1} />
-        </TouchableOpacity>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={(e) => {
-            const newIndex = Math.round(e.nativeEvent.contentOffset.x / width);
-            setActiveImageIndex(newIndex);
-          }}>
-          {hotel.gallery.map((image, index) => (
-            <Image
-              key={image + index}
-              source={{ uri: image }}
-              style={styles.image}
-              contentFit="cover"
-              placeholderContentFit="contain"
-              placeholder={require('../assets/images/hotel-placeholder.png')}
-            />
-          ))}
-        </ScrollView>
-        <View style={styles.pagination}>
-          {hotel.gallery.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.paginationDot,
-                activeImageIndex === index && styles.paginationDotActive,
-              ]}
-            />
-          ))}
-        </View>
-      </View>
+      <TouchableOpacity onPress={handleGoBack} style={styles.backIcon}>
+        <FontAwesome name="arrow-left" size={24} color={Colors.grey1} />
+      </TouchableOpacity>
+      <HorizontalGallery images={hotel.gallery} />
 
       <View style={styles.infoContainer}>
         <Text style={styles.hotelName}>{hotel.name}</Text>
@@ -107,29 +71,31 @@ export default function HotelDetailScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.mapContainer} onPress={openMap}>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: hotel.location.latitude,
-              longitude: hotel.location.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            }}
-            scrollEnabled={false}
-            zoomEnabled={false}
-            rotateEnabled={false}>
-            <Marker
-              coordinate={{
+        {hotel.location.latitude && hotel.location.longitude && (
+          <TouchableOpacity style={styles.mapContainer} onPress={openMap}>
+            <MapView
+              style={styles.map}
+              initialRegion={{
                 latitude: hotel.location.latitude,
                 longitude: hotel.location.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
               }}
-            />
-          </MapView>
-          <View style={styles.mapOverlay}>
-            <Text style={styles.mapText}>{t('hotelDetails.openMap')}</Text>
-          </View>
-        </TouchableOpacity>
+              scrollEnabled={false}
+              zoomEnabled={false}
+              rotateEnabled={false}>
+              <Marker
+                coordinate={{
+                  latitude: hotel.location.latitude,
+                  longitude: hotel.location.longitude,
+                }}
+              />
+            </MapView>
+            <View style={styles.mapOverlay}>
+              <Text style={styles.mapText}>{t('hotelDetails.openMap')}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('hotelDetails.hours')}</Text>
@@ -227,14 +193,6 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  imageContainer: {
-    height: 250,
-    width: width,
-  },
-  image: {
-    width: width,
-    height: 250,
   },
   infoContainer: {
     padding: 16,
@@ -379,21 +337,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 5,
-  },
-  pagination: {
-    flexDirection: 'row',
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 24,
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: Colors.transparentGrey,
-    margin: 3,
-  },
-  paginationDotActive: {
-    backgroundColor: Colors.white,
   },
 });
