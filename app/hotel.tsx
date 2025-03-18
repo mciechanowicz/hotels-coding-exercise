@@ -6,11 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import * as Linking from 'expo-linking';
 import MapView, { Marker } from 'react-native-maps';
 import StarRating from '../components/StarRating';
 import { Hotel } from '@/types/hotel';
@@ -19,12 +17,14 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { Image } from 'expo-image';
 import { useOpenMap } from '@/hooks/useOpenMap';
 import ErrorView from '@/components/ErrorView';
+import { useContact } from '@/hooks/useContact';
 
 const { width } = Dimensions.get('window');
 
 export default function HotelDetailScreen() {
   const t = useTranslation();
   const router = useRouter();
+  const { openPhone, openEmail } = useContact();
   const { hotelData } = useLocalSearchParams<{ hotelData: string }>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -38,25 +38,6 @@ export default function HotelDetailScreen() {
 
   const handleGoBack = () => {
     router.back();
-  };
-
-  const handleCall = () => {
-    if (!hotel) return;
-    const phoneNumber = `tel:${hotel.contact.phoneNumber}`;
-
-    Linking.openURL(phoneNumber).catch((err) => {
-      Alert.alert(t('common.emailError'));
-      console.error('Error when opening phone app:', err);
-    });
-  };
-
-  const handleEmail = () => {
-    if (!hotel) return;
-
-    Linking.openURL(`mailto:${hotel.contact.email}`).catch((err) => {
-      Alert.alert(t('common.phoneError'));
-      console.error('Error when opening email app:', err);
-    });
   };
 
   if (!hotel)
@@ -191,7 +172,9 @@ export default function HotelDetailScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}> {t('hotelDetails.contact')}</Text>
           <View style={styles.contactContainer}>
-            <TouchableOpacity style={styles.contactButton} onPress={handleCall}>
+            <TouchableOpacity
+              style={styles.contactButton}
+              onPress={() => openPhone(hotel.contact.phoneNumber)}>
               <FontAwesome name="phone" size={16} color="white" />
               <Text style={styles.contactButtonText}>
                 {t('hotelDetails.phone')}
@@ -199,7 +182,7 @@ export default function HotelDetailScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.contactButton}
-              onPress={handleEmail}>
+              onPress={() => openEmail(hotel.contact.email)}>
               <FontAwesome name="envelope" size={16} color="white" />
               <Text style={styles.contactButtonText}>
                 {t('hotelDetails.email')}
