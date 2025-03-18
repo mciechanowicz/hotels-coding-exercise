@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import HotelCard from '../components/HotelCard';
@@ -17,6 +16,7 @@ import { filterAndSortHotels } from '@/services/filterHotels';
 import HotelListHeader from '@/components/HotelListHeader';
 import { Hotels } from '@/types/hotel';
 import { HotelFilters } from '@/types/hotelFilters';
+import ErrorView from '@/components/ErrorView';
 
 export default function HotelListScreen() {
   const t = useTranslation();
@@ -53,19 +53,7 @@ export default function HotelListScreen() {
     );
   }
 
-  if (error) {
-    return (
-      <View style={styles.centered}>
-        <FontAwesome name="exclamation-circle" size={50} color={Colors.error} />
-        <Text style={styles.errorText}>{error}</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={refreshHotels}>
-          <Text style={styles.retryButtonText}>
-            {t('hotelList.retryButtonText')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  if (error) return <ErrorView error={error} />;
 
   return (
     <View style={styles.container}>
@@ -117,24 +105,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: Colors.grey1,
-  },
-  errorText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: Colors.grey1,
-    textAlign: 'center',
-  },
-  retryButton: {
-    marginTop: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: Colors.blue,
-    borderRadius: 8,
-  },
-  retryButtonText: {
-    color: Colors.white,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   listContent: {
     gap: 16,

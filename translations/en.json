@@ -1,8 +1,10 @@
 {
+  "common": {
+    "retryButtonText": "Try again"
+  },
   "hotelList": {
     "title": "Hotels",
     "loadingHotels": "Loading hotels...",
-    "retryButtonText": "Try again",
     "emptyListText": "No hotels found",
     "changeSearchFilters": "Try changing your search filters",
     "errorFetchingHotels": "Failed to download the list of hotels. Try again.",
