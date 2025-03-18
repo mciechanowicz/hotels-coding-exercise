@@ -7,15 +7,14 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import MapView, { Marker } from 'react-native-maps';
 import { Hotel } from '@/types/hotel';
 import { Colors } from '@/design/colors';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useOpenMap } from '@/hooks/useOpenMap';
 import ErrorView from '@/components/ErrorView';
 import { useContact } from '@/hooks/useContact';
 import HorizontalGallery from '@/components/HorizontalGallery';
 import HotelDescriptionSection from '@/components/Hotel/HotelDescriptionSection';
+import HotelMap from '@/components/Hotel/HotelMap';
 
 const HotelDetailScreen = () => {
   const t = useTranslation();
@@ -24,12 +23,6 @@ const HotelDetailScreen = () => {
   const { hotelData } = useLocalSearchParams<{ hotelData: string }>();
 
   const hotel: Hotel = hotelData ? JSON.parse(hotelData) : null;
-
-  const openMap = useOpenMap({
-    latitude: hotel.location.latitude,
-    longitude: hotel.location.longitude,
-    label: hotel.name,
-  });
 
   const handleGoBack = () => {
     router.back();
@@ -49,7 +42,6 @@ const HotelDetailScreen = () => {
         <FontAwesome name="arrow-left" size={24} color={Colors.grey1} />
       </TouchableOpacity>
       <HorizontalGallery images={hotel.gallery} />
-
       <View style={styles.infoContainer}>
         <HotelDescriptionSection
           name={hotel.name}
@@ -58,32 +50,11 @@ const HotelDetailScreen = () => {
           address={hotel.location.address}
           city={hotel.location.city}
         />
-
-        {hotel.location.latitude && hotel.location.longitude && (
-          <TouchableOpacity style={styles.mapContainer} onPress={openMap}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: hotel.location.latitude,
-                longitude: hotel.location.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-              }}
-              scrollEnabled={false}
-              zoomEnabled={false}
-              rotateEnabled={false}>
-              <Marker
-                coordinate={{
-                  latitude: hotel.location.latitude,
-                  longitude: hotel.location.longitude,
-                }}
-              />
-            </MapView>
-            <View style={styles.mapOverlay}>
-              <Text style={styles.mapText}>{t('hotelDetails.openMap')}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        <HotelMap
+          latitude={hotel.location.latitude}
+          longitude={hotel.location.longitude}
+          label={hotel.name}
+        />
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('hotelDetails.hours')}</Text>
@@ -271,29 +242,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: Colors.white,
-  },
-  mapContainer: {
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 20,
-    overflow: 'hidden',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  mapOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mapText: {
-    color: Colors.white,
-    fontSize: 14,
-    fontWeight: 'bold',
-    backgroundColor: Colors.transparentBlack,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
   },
 });
 
