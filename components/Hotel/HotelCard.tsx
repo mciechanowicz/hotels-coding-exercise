@@ -35,7 +35,7 @@ const HotelCard = ({ hotel }: Props) => {
         style={styles.image}
         contentFit="cover"
         placeholderContentFit="cover"
-        placeholder={require('../assets/images/hotel-placeholder.png')}
+        placeholder={require('../../assets/images/hotel-placeholder.png')}
       />
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
