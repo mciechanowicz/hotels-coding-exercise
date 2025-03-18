@@ -1,5 +1,14 @@
 import { Scope, TranslateOptions } from 'i18n-js';
 
+jest.mock('expo-localization', () => ({
+  getLocales: () => [
+    {
+      languageCode: 'en',
+      countryCode: 'US',
+    },
+  ],
+}));
+
 jest.mock('@/hooks/useTranslation', () => ({
   useTranslation:
     () =>
