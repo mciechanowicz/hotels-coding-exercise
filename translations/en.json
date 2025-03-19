@@ -1,0 +1,43 @@
+{
+  "common": {
+    "retryButtonText": "Try again",
+    "phoneError": "Unable to open phone app.",
+    "emailError": "Unable to open email app.",
+    "mapError": "Unable to open map."
+  },
+  "hotelList": {
+    "title": "Hotels",
+    "loadingHotels": "Loading hotels...",
+    "emptyListText": "No hotels found",
+    "changeSearchFilters": "Try changing your search filters",
+    "errorFetchingHotels": "Failed to download the list of hotels. Try again.",
+    "filters": "Filters",
+    "hotelsFound": {
+      "one": "{{count}} hotel found",
+      "other": "{{count}} hotels found"
+    },
+    "filtersTitle": "Filter Hotels",
+    "filtersStarRating": "Star rating",
+    "filtersSortBy": "Sort By",
+    "filtersSortByPrice": "Price",
+    "filtersSortByRating": "Rating",
+    "filtersSortByStars": "Stars",
+    "filtersReset": "Reset",
+    "filtersApply": "Apply"
+  },
+  "hotelDetails": {
+    "title": "Hotel details",
+    "perNight": "/ night",
+    "hours": "Hours",
+    "checkIn": "Check in",
+    "checkOut": "Check out",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "E-mail",
+    "pricePerNight": "Price per night",
+    "bookNow": "Book Now",
+    "booked": "Booked!",
+    "openMap": "Click to open the map",
+    "goBackButton": "Go back"
+  }
+}

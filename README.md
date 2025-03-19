@@ -1,50 +1,90 @@
-# Welcome to your Expo app 👋
+# Hotel Explorer App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Tech Stack
 
-## Get started
+- **Expo**
+- **Expo Router** (File-based navigation)
+- **TypeScript** (Static typing)
+- **Axios** (API requests)
+- **React Native Maps** (Displaying location on a map)
+- **i18n-js** (Internationalization)
+- **ESLint & Prettier** (Code formatting and linting)
+- **Jest & React Testing Library (RTL)** (Unit and integration testing)
 
-1. Install dependencies
+## Setup Instructions
 
-   ```bash
-   npm install
+### Prerequisites
+
+Ensure you have the following installed:
+
+- **Node.js** (latest LTS recommended)
+- **Yarn package manager**
+- **Expo CLI** (`yarn global add expo-cli`)
+- **Xcode** (for iOS simulators)
+- **Android Studio** (for Android emulators)
+- You can also use a physical device with the Expo Go app installed instead of an iOS or Android simulator/emulator.
+
+### Installation Steps
+
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd <project-folder>
    ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
+2. Install dependencies:
+   ```sh
+   yarn install
    ```
+3. Create a `.env` file in the root of the project and add:
+   ```sh
+   EXPO_PUBLIC_API_URL=https://technology.lastminute.com/api
+   ```
+4. Start the project:
+   ```sh
+   yarn start
+   ```
+5. Run the app on a simulator or device:
+   - If the Expo server is already running, you can start the app by pressing `i` for iOS or `a` for Android in the terminal.
 
-In the output, you'll find options to open the app in a
+- If you haven’t started the Expo server yet, you can do it at the same time by installing the app on the given environment:
+  - For iOS: `yarn ios`
+  - For Android: `yarn android`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Running Tests
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+To execute unit and integration tests:
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+yarn test
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Project Structure
 
-## Learn more
+- **app/** – Screens structured according to Expo Router
+- **components/** – Reusable UI components
+- **hooks/** – Custom hooks for handling logic
+- **services/** – API service for hotel data, with separate modules for fetching, filtering, and sorting.
+- **translations/** – Internationalization
+- **types/** – TypeScript interfaces and types
+- **constants/** – Application-related constants
+- **design/** – UI-related constants (e.g., colors, typography, spacing)
+- **assets/** – Images, icons, and other static assets
+- **lib/** – Setup for third-party libraries
+- **mocks/** – Mock data for testing and development
 
-To learn more about developing your project with Expo, look at the following resources:
+## Features
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Hotel Listing**: Displays a list of hotels fetched from an API.
+- **Hotel Details**: Shows more information about a selected hotel.
+- **Filtering & Sorting**:
+  - Filter hotels by star rating.
+  - Sort hotels by price, rating, or number of stars (ascending & descending).
+- **Map Integration**: Shows hotel location on a map using React Native Maps.
+- **Deep Linking to Native Apps**:
+  - Open map in the native app.
+  - Call or email hotel contacts directly (works only on physical devices or Android emulators).
+- **Error Handling for Images**: Placeholder image is displayed if the API returns a broken image URL.
+- **Internationalization**: Translations are handled using JSON files and i18n-js.
+- **Custom App Icon**: Default Expo icon has been replaced with a custom one.
+- **Tests**: Basic tests for the hotel listing screen.
+- **No Custom Splash Screen Added**

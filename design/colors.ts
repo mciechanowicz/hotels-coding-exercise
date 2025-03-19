@@ -1,0 +1,17 @@
+export enum Colors {
+  white = '#fff',
+  black = '#000',
+  transparentBlack = 'rgba(0, 0, 0, 0.5)',
+  background = '#F5F5F5',
+  blue = 'rgb(10, 132, 255)',
+  green = '#4CAF50',
+  red = '#FF6B6B',
+  error = 'rgb(255, 59, 48)',
+  grey1 = '#5a5a5a',
+  grey2 = '#8c8b8b',
+  grey3 = '#ccc',
+  grey4 = '#333333',
+  grey5 = '#f0f0f0',
+  transparentGrey = 'rgba(255, 255, 255, 0.5)',
+  yellow = '#FFD700',
+}
